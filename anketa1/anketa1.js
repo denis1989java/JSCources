@@ -6,7 +6,7 @@ var age = () => {
     do {
         age = prompt("Какой у вас возраст");
     } while (age.search(/[^0-9]/) !== -1 || age <= 0);
-    return age;
+    return parseInt(age);
 };
 
 var stringSex = () => {
@@ -36,6 +36,6 @@ var ageNumber;
 document.body.innerHTML='<p>Ваше ФИО: ' + surname() + ' ' + names() + ' ' + secondName() +'</p>'+
     '<p>Ваш возраст в годах: ' + (ageNumber=age())+ '</p>'+
     '<p>Ваш возраст в днях: ' + (ageNumber * 365)+'</p>'+
-    '<p>Через 5 лет вам будет: '+(parseInt(ageNumber)+5)+'</p>'+
+    '<p>Через 5 лет вам будет: '+(ageNumber+5)+'</p>'+
     '<p>'+stringSex()+'</p>'+
     '<p>'+stringPension(ageNumber)+'</p>';
