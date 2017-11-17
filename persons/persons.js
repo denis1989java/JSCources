@@ -83,7 +83,7 @@ class Women extends Person {
     }
 
     showNailColor(){
-        console.log('Nail color: '+ this._nailColor);
+        console.log('Nail color of '+this._name+' is '+ this._nailColor);
     }
 }
 
@@ -104,9 +104,11 @@ ivan.addToTeam(anna);
 ivan.addToTeam(olga);
 ivan.showTeam();
 ivan.sayHello();
+petr.setFriend(andrei);
 petr.showTeam();
 andrei.showTeam();
 anna.setNailColor('red');
 anna.showNailColor();
 petr.sayHello();
+andrei.sayHello();
 anna.sayHello();
