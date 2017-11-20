@@ -1,6 +1,6 @@
-function parseString(string1) {
+function parseString() {
     let string=prompt('введите строку');
-    let array=string1.split(/[^А-яёЁ]+/).join('').split('');
+    let array=string.toLowerCase().split(/[^аеёиоуыэюя]+/).join('').split('');
     let map={};
     for (let i=0;i<array.length;i++){
         if(array[i] in map){
@@ -9,4 +9,6 @@ function parseString(string1) {
             map[array[i]]=1;
         }
     }
+    return map;
 }
+parseString();
