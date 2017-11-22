@@ -1,14 +1,17 @@
-function parseString() {
-    let string=prompt('введите строку');
-    let array=string.toLowerCase().split(/[^аеёиоуыэюя]+/).join('').split('');
-    let map={};
-    for (let i=0;i<array.length;i++){
-        if(array[i] in map){
-            map[array[i]]=map[array[i]]+1;
-        }else{
-            map[array[i]]=1;
+
+function parseString(string) {
+    return string.toLowerCase().split(/[^аеёиоуыэюя]+/).join('').split('').length;
+}
+
+function parseString1(string) {
+    let count=0;
+    for(let i=0;i<string.length;i++){
+        if(string[i].search(/[аеёиоуыэюя]/)){
+            count++;
         }
     }
-    return map;
+    return string.toLowerCase().split(/[^аеёиоуыэюя]+/).join('').split('').length;
 }
-parseString();
+let string=prompt('введите строку');
+console.log(parseString(string));
+console.log(parseString1(string));
