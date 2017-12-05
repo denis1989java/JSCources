@@ -1,0 +1,33 @@
+label {
+    display: inline-block;
+    width: 160px;
+    margin-right: 0;
+}
+#developers, #name{
+    width: 400px;
+}
+#url{
+    width: 450px;
+}
+#date, #visitors{
+    width: 100px;
+}
+#email{
+    width: 200px;
+}
+select{
+    width: 204px;
+}
+.labelRadio{
+    width: 80px;
+}
+textarea{
+    width: 760px;
+    min-height: 50px;
+}
+.errors{
+    width: 300px;
+    margin: 0;
+    display: inline-block;
+    color: red;
+}

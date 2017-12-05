@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>VALID_FORM</title>
+    <link href="VALID_FORM.css" rel="stylesheet" type="text/css">
+    <script src="VALID_FORM.js" type="text/javascript" defer></script>
+</head>
+<body>
+<form method="post" action="http://fe.it-academy.by/TestForm.php " name="myForm"  onsubmit="return sub()" >
+<label for="developers">Разработчики:</label>
+<input onfocusout='errorDevelopers(this)' id="developers">
+<div class="errors" id="errorMessageDevelopers"></div><br>
+<label for="name">Название сайта:</label>
+<input onfocusout='errorName(this)' id="name">
+<div class="errors" id="errorMessageName"></div><br>
+<label for="url">URL сайта:</label>
+<input onfocusout='errorURL(this)' id="url">
+<div class="errors" id="errorMessageURL"></div><br>
+<label for="date">Дата запуска сайта:</label>
+<input onfocusout='errorDate(this)'  id="date">
+<div class="errors" id="errorMessageDate"></div><br>
+<label for="visitors">Посетителей за сутки:</label>
+<input onfocusout='errorVisitors(this)' id="visitors">
+<div class="errors" id="errorMessageVisitors"></div><br>
+<label for="email">E-mail для связи:</label>
+<input onfocusout='errorEmail(this)' id="email">
+<div class="errors" id="errorMessageEmail"></div><br>
+<label for="kind">Рубрика каталога:</label>
+<select  onfocusout='errorKind(this)' id="kind">
+    <option selected value="здоровье">здоровье</option>
+    <option  value="бытовая">бытовая техника</option>
+    <option  value="домашний">домашний уют</option>
+</select>
+<div class="errors" id="errorMessageKind"></div><br>
+<label>Размещение:</label>
+<input id="1" value="бесплатное"  onfocus='errorPlace(this)'   type="radio" name="place">
+<label for="1" class="labelRadio">бесплатное</label>
+<input id="2" value="платное"  onfocus='errorPlace(this)'  type="radio" name="place">
+<label for="2" class="labelRadio">платное</label>
+<input id="3" value="VIP" onfocus='errorPlace(this)' type="radio" name="place">
+<label for="3" class="labelRadio">VIP</label>
+<div class="errors" id="errorMessagePlace"></div><br>
+<label for="feedBack">Разрешить отзывы:</label>
+<input type="checkbox"  onclick='errorFeed(this)' id="feedBack">
+<div class="errors" id="errorMessageFeed"></div><br>
+<label for="description">Описание:</label><br>
+<textarea onfocusout='errorDescription(this)' id="description"></textarea>
+<div class="errors" id="errorMessagedescription"></div><br>
+<input type="submit" value="Опубликовать">
+</form>
+</body>
+</html>
