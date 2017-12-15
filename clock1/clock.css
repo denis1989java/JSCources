@@ -1,0 +1,89 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+.big{
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    border: solid 1px black;
+    z-index: 1;
+    background-color: #1b6d85;
+}
+#svg{
+    z-index: 2;
+    position: absolute;
+    width: 500px;
+    height: 500px;
+}
+/*.small{*/
+    /*position: absolute;*/
+    /*background-color: #eefeff;*/
+    /*width: 60px;*/
+    /*height: 60px;*/
+    /*border-radius: 50%;*/
+    /*line-height: 60px;*/
+    /*text-align: center;*/
+    /*font-size: 32px;*/
+    /*color: dodgerblue;*/
+/*}*/
+/*#span{*/
+    /*position: absolute;*/
+    /*left: 48%;*/
+    /*top:40%;*/
+    /*font-size: 20px;*/
+    /*color: yellow;*/
+    /*z-index: 2;*/
+/*}*/
+/*#secundi{*/
+    /*width: 3px;*/
+    /*height: 300px;*/
+    /*position: absolute;*/
+    /*top: 27%;*/
+    /*left: 50%;*/
+    /*z-index: 1;*/
+/*}*/
+/*#secundi1{*/
+    /*height: 150px;*/
+    /*content: "";*/
+    /*background-color: black;*/
+/*}*/
+/*#secundi2{*/
+    /*height: 150px;*/
+    /*content: "";*/
+/*}*/
+/*#hours{*/
+    /*width: 20px;*/
+    /*height: 260px;*/
+    /*position: absolute;*/
+    /*top: 32%;*/
+    /*left: 50%;*/
+    /*z-index: 1;*/
+/*}*/
+/*#hours1{*/
+    /*height: 130px;*/
+    /*content: "";*/
+    /*background-color: black;*/
+/*}*/
+/*#hours2{*/
+    /*height: 130px;*/
+    /*content: "";*/
+/*}*/
+/*#min{*/
+    /*width: 10px;*/
+    /*height: 360px;*/
+    /*position: absolute;*/
+    /*top: 23%;*/
+    /*left: 50%;*/
+    /*z-index: 1;*/
+/*}*/
+/*#min1{*/
+    /*height: 180px;*/
+    /*content: "";*/
+    /*background-color: black;*/
+/*}*/
+/*#min2{*/
+    /*height: 180px;*/
+    /*content: "";*/
+/*}*/
