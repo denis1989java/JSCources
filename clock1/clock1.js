@@ -20,12 +20,13 @@ for (let i = 0; i < 12; i++) {
     svg.appendChild(circle);
     let text=document.createElementNS("http://www.w3.org/2000/svg","text");
     text.innerHTML=i+1;
-    text.textAnchor="middle";
+    text.setAttribute("text-anchor","middle");
+    text.setAttribute("font-size","32px");
     text.id=i;
     svg.appendChild(text);
     text=document.getElementById(i);
-    text.setAttribute("x",  centerX + ((parseInt(r.width) / 2) - 40) * Math.cos(rad(30) * i - rad(60))-5);
-    text.setAttribute("y", centerY + ((parseInt(r.width) / 2) - 40) * Math.sin(rad(30) * i - rad(60))+5);
+    text.setAttribute("x",  centerX + ((parseInt(r.width) / 2) - 40) * Math.cos(rad(30) * i - rad(60)));
+    text.setAttribute("y", centerY + ((parseInt(r.width) / 2) - 40) * Math.sin(rad(30) * i - rad(60))+9);
 }
 let sec=document.createElementNS("http://www.w3.org/2000/svg","line");
 sec.setAttribute("x1",centerX);
