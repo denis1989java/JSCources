@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CLOCK_DOM</title>
+</head>
+<body>
+
+<script>
+    'use strict';
+    class ApplicationView { // Shell
+        constructor(element) {
+            this.element = element;
+        }
+
+        render() {
+            var div = this.div1 = document.createElement('div');
+            div.style.float = 'left';
+            div.style.width = "30%";
+            this.element.appendChild(div);
+            var btn = document.createElement('button');
+            btn.textContent = "Stop";
+            btn.className = "stop";
+            div.appendChild(btn);
+            btn = document.createElement('button');
+            btn.textContent = "Start";
+            btn.className = "start";
+            div.appendChild(btn);
+            div = this.div2 = document.createElement('div');
+            div.style.float = 'left';
+            div.style.width = "30%";
+            btn = document.createElement('button');
+            btn.textContent = "Stop";
+            btn.className = "stop";
+            div.appendChild(btn);
+            btn = document.createElement('button');
+            btn.textContent = "Start";
+            btn.className = "start";
+            div.appendChild(btn);
+            this.element.appendChild(div);
+            div = this.div3 = document.createElement('div');
+            div.style.float = 'left';
+            div.style.width = "30%";
+            btn = document.createElement('button');
+            btn.textContent = "Stop";
+            btn.className = "stop";
+            div.appendChild(btn);
+            btn = document.createElement('button');
+            btn.textContent = "Start";
+            btn.className = "start";
+            div.appendChild(btn);
+            this.element.appendChild(div);
+            div = this.div4 = document.createElement('div');
+            div.style.float = 'left';
+            div.style.width = "30%";
+            btn = document.createElement('button');
+            btn.textContent = "Stop";
+            btn.className = "stop";
+            div.appendChild(btn);
+            btn = document.createElement('button');
+            btn.textContent = "Start";
+            btn.className = "start";
+            div.appendChild(btn);
+            this.element.appendChild(div);
+            div = this.div5 = document.createElement('div');
+            div.style.float = 'left';
+            div.style.width = "30%";
+            btn = document.createElement('button');
+            btn.textContent = "Stop";
+            btn.className = "stop";
+            div.appendChild(btn);
+            btn = document.createElement('button');
+            btn.textContent = "Start";
+            btn.className = "start";
+            div.appendChild(btn);
+            this.element.appendChild(div);
+            div = this.div6 = document.createElement('div');
+            div.style.float = 'left';
+            div.style.width = "30%";
+            btn = document.createElement('button');
+            btn.textContent = "Stop";
+            btn.className = "stop";
+            div.appendChild(btn);
+            btn = document.createElement('button');
+            btn.textContent = "Start";
+            btn.className = "start";
+            div.appendChild(btn);
+            this.element.appendChild(div);
+        }
+    }
+
+    class ApplicationController {
+        constructor(applicationView) {
+            this.applicationView = applicationView;
+            applicationView.render();
+            var pubSubService = window.pubSubService = new PubSubService();
+            new ClockController(
+                new ClockModel("GMT+1", pubSubService, "GMT+1"),
+                new ClockView(applicationView.div1),
+                pubSubService);
+            new ClockController(
+                new ClockModel("GMT+2", pubSubService, "GMT+2"),
+                new ClockView(applicationView.div2),
+                pubSubService);
+            new ClockController(
+                new ClockModel("GMT+3", pubSubService, "GMT+3"),
+                new ClockView1(applicationView.div3),
+                pubSubService);
+            new ClockController(
+                new ClockModel("GMT+4", pubSubService, "GMT+4"),
+                new ClockView1(applicationView.div4),
+                pubSubService);
+            new ClockController(
+                new ClockModel("GMT+5", pubSubService, "GMT+5"),
+                new ClockView2(applicationView.div5),
+                pubSubService);
+            new ClockController(
+                new ClockModel("GMT+6", pubSubService, "GMT+6"),
+                new ClockView2(applicationView.div6),
+                pubSubService);
+        }
+    }
+
+    class ClockView {
+        constructor (element) {
+            this.element = element;
+        }
+
+        render() {
+            //циферблат
+            let big = document.createElement('div');
+            this.element.appendChild(big);
+            big.style = 'position: relative; width: 301px; height: 301px; background: greenyellow; border-radius: 50%';
+            let r=getComputedStyle(big);
+            let width = r.width;
+            let height = r.height;
+            let centerX =parseInt(r.left)  + (parseInt( width)/ 2);
+            let centerY =parseInt(r.top)  + (parseInt(height)  / 2);
+            let rad = function toRadians(angle) {
+                return angle * (Math.PI / 180);
+            };
+            for (var i = 1; i <= 12; i++) {
+                let dig = document.createElement('div');
+                dig.style='position: absolute; background: #2aabd2;  width: 40px;' +
+                    'height: 40px; border-radius: 50%; line-height: 40px;' +
+                    '    text-align: center;' +
+                    '    font-size: 20px;' +
+                    '    color: yellow;';
+                let x, y;
+                dig.className = 'small';
+                dig.innerHTML = i + 1;
+               big.appendChild(dig);
+                let digSt = getComputedStyle(dig);
+                x = centerX + ((parseInt(r.width) / 2) - 40) * Math.cos(rad(30) * i - rad(60)) - (parseInt(digSt.width) / 2);
+                y = centerY + ((parseInt(r.width) / 2) - 40) * Math.sin(rad(30) * i - rad(60)) - (parseInt(digSt.width) / 2);
+                dig.style.left = x + 'px';
+                dig.style.top = y + 'px';
+            }
+
+            //стрелка час
+            let hour = this.hour = document.createElement('div');
+            big.appendChild(hour);
+            hour.style = ' width: 12px;height: 80px; position: absolute;z-index: 2;background-color:red;transform-origin: 50% 100%';
+            hour.style.left = centerX - 6 + 'px';
+            hour.style.top = centerY-80 + 'px';
+
+           //стрелка минуты
+            let min = this.min = document.createElement('div');
+            big.appendChild(min);
+            min.style = ' width: 6px;height: 100px; position: absolute;z-index: 2;background-color:green;transform-origin: 50% 100%';
+            min.style.left = centerX - 3 + 'px';
+            min.style.top = centerY-100 + 'px';
+
+            let sec = this.sec = document.createElement('div');
+            big.appendChild(sec);
+            sec.style = 'width: 2px;height: 120px; position: absolute;z-index: 2;background-color:blue;transform-origin: 50% 100%';
+            sec.style.left = centerX -1 + 'px';
+            sec.style.top = centerY-120 + 'px';
+
+            //электр часы
+            let electronicWatch = this.electronicWatch = document.createElement('div');
+            big.appendChild(electronicWatch);
+            electronicWatch.style = 'position: absolute;font-size: 20px;color: blue;z-index: 2;left: 38%; top: 26%;' ;
+        }
+
+        update(model) {
+            this.hour.style.transform = 'rotate(' + model.rotateHour + 'deg)';
+            this.min.style.transform = 'rotate(' + model.rotateMin + 'deg)';
+            this.sec.style.transform = 'rotate(' + model.rotateSec + 'deg)';
+            this.electronicWatch.innerHTML = model.electronicWatchText;
+        }
+    }
+
+    class ClockView1 {
+        constructor (element) {
+            this.element = element;
+
+        }
+
+        render() {
+            //циферблат
+            let svg = document.createElementNS("http://www.w3.org/2000/svg","svg");
+            this.element.appendChild(svg);
+            svg.style = 'position: relative; width: 301px; height: 301px;z-index: 2';
+            let r=getComputedStyle(svg);
+            let width = r.width;
+            let height = r.height;
+            let centerX =parseInt(r.left)  + (parseInt( width)/ 2);
+            let centerY =parseInt(r.top)  + (parseInt(height)  / 2);
+            let rad = function toRadians(angle) {
+                return angle * (Math.PI / 180);
+            };
+            let circle1 = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+            circle1.setAttribute("r", parseInt(width)/2);
+            circle1.setAttribute("fill", "#1b6d85");
+            circle1.setAttribute("cx",  centerX );
+            circle1.setAttribute("cy", centerY);
+            svg.appendChild(circle1);
+            for (let i = 0; i < 12; i++) {
+                let circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+                circle.setAttribute("id","circle");
+                circle.setAttribute("r", "20");
+                circle.setAttribute("fill", "yellow");
+                circle.setAttribute("cx",  centerX + ((parseInt(r.width) / 2) - 40) * Math.cos(rad(30) * i - rad(60)));
+                circle.setAttribute("cy", centerY + ((parseInt(r.width) / 2) - 40) * Math.sin(rad(30) * i - rad(60)) );
+                svg.appendChild(circle);
+                let text=document.createElementNS("http://www.w3.org/2000/svg","text");
+                text.innerHTML=(i+1);
+                text.setAttribute("x",  centerX + ((parseInt(r.width) / 2) - 40) * Math.cos(rad(30) * i - rad(60)));
+                text.setAttribute("y", centerY + ((parseInt(r.width) / 2) - 40) * Math.sin(rad(30) * i - rad(60))+9);
+                text.setAttribute("text-anchor","middle");
+                text.setAttribute("font-size","20px");
+                svg.appendChild(text);
+            }
+            let sec=this.sec=document.createElementNS("http://www.w3.org/2000/svg","line");
+            sec.setAttribute("x1",centerX);
+            sec.setAttribute("y1",centerY);
+            sec.setAttribute("x2",centerX);
+            sec.setAttribute("y2",centerY-120+"");
+            sec.setAttribute("stroke","red");
+            sec.setAttribute("stroke-width",2);
+            sec.id="secundi";
+            svg.appendChild(sec);
+            let min = this.min =document.createElementNS("http://www.w3.org/2000/svg","line");
+            min.setAttribute("x1",centerX);
+            min.setAttribute("y1",centerY);
+            min.setAttribute("x2",centerX);
+            min.setAttribute("y2",centerY-100+"");
+            min.setAttribute("stroke","green");
+            min.setAttribute("stroke-width",6);
+            min.id="min";
+            svg.appendChild(min);
+            let hour = this.hour=document.createElementNS("http://www.w3.org/2000/svg","line");
+            hour.setAttribute("x1",centerX);
+            hour.setAttribute("y1",centerY);
+            hour.setAttribute("x2",centerX);
+            hour.setAttribute("y2",centerY-80+"");
+            hour.setAttribute("stroke","orange");
+            hour.setAttribute("stroke-width",12);
+            hour.id="hours";
+            svg.appendChild(hour);
+            let time  = this.electronicWatch=document.createElementNS("http://www.w3.org/2000/svg","text");
+            time.textAnchor="middle";
+            time.setAttribute("x",centerX-35+"");
+            time.setAttribute("y",centerY-55+"");
+            time.setAttribute("font-size","20");
+            svg.appendChild(time);
+        }
+
+        update(model) {
+            this.hour.setAttribute("transform","rotate("+model.rotateHour+" 150 150)");
+            this.min.setAttribute("transform","rotate("+model.rotateMin+" 150 150)");
+            this.sec.setAttribute("transform","rotate("+model.rotateSec+" 150 150)");
+            this.electronicWatch.innerHTML = model.electronicWatchText;
+        }
+    }
+    class ClockView2 {
+        constructor (element) {
+            this.element = element;
+            this.canvas=null;
+        }
+
+        render() {
+            //циферблат
+            let canvas= this.canvas = document.createElement("canvas");
+            canvas.setAttribute("height",301);
+            canvas.setAttribute("width",301);
+            this.element.appendChild(canvas);
+
+        }
+
+        update(model) {
+            let context = this.canvas.getContext('2d');
+            context.clearRect(0, 0, 301, 301);
+            context.save();
+            context.fillStyle = 'red';
+            context.beginPath();
+            context.arc(150, 150, 150, 0, Math.PI * 2, false);
+            context.closePath();
+            context.fill();
+            context.restore();
+            let rad = function toRadians(angle) {
+                return angle * (Math.PI / 180);
+            };
+
+            for (let i = 0; i < 12; i++) {
+                let coordX = 150 + (110 * Math.cos(rad(30) * i - rad(60)));
+                let coordY = 150 + ( 110 * Math.sin(rad(30) * i - rad(60)));
+                context.save();
+                context.fillStyle = 'yellow';
+                context.beginPath();
+                context.arc(coordX, coordY, 20, 0, Math.PI * 2, false);
+                context.closePath();
+                context.fill();
+                context.restore();
+
+                context.save();
+                context.fillStyle = 'black';
+                context.font = 'normal 20px Arial';
+                context.textAlign = 'center';
+                context.textBaseline = 'middle';
+                let cifra = (i + 1);
+                context.fillText(cifra, coordX, coordY);
+                context.restore();
+            }
+
+
+            context.save();
+            context.fillStyle = 'black';
+            context.font = 'normal 20px Arial';
+            context.textAlign = 'center';
+            context.textBaseline = 'middle';
+            context.fillText(model.electronicWatchText, 150, 90);
+            context.restore();
+
+            context.save();
+            context.strokeStyle = '#ff51cb';
+            context.lineWidth = 2;
+            context.translate(150,150);
+            context.rotate(2 * Math.PI * parseInt(model.seconds) / 60);
+            context.beginPath();
+            context.moveTo(0, 0);
+            context.lineTo(0, -110);
+            context.stroke();
+            context.restore();
+
+            context.save();
+            context.strokeStyle = 'blue';
+            context.lineWidth = 6;
+            context.translate(150,150);
+            context.rotate(2 * Math.PI * parseInt(model.minutes)/60);
+            context.beginPath();
+            context.moveTo(0, 0);
+            context.lineTo(0, -80);
+            context.stroke();
+            context.restore();
+
+            context.save();
+            context.strokeStyle = 'black';
+            context.lineWidth = 12;
+            context.translate(150,150);
+            context.rotate(2 * Math.PI *parseInt(model.hours)/12);
+            context.beginPath();
+            context.moveTo(0, 0);
+            context.lineTo(0, -80);
+            context.stroke();
+            context.restore();
+        }
+    }
+
+    class ClockModel {
+        constructor(timeZone, pubSubService, modelName) {
+            this.timeZone = timeZone[timeZone.length-1];
+            this.pubSubService = pubSubService;
+            this.modelName = modelName;
+
+            //часы
+            this.time = null;
+            this.seconds = null;
+            this.minutes = null;
+            this.hours = null;
+            this.rotateSec = null;
+            this.rotateMin = null;
+            this.rotateHour = null;
+            this.timeout = null;
+
+            //this.updated = null;
+        }
+
+        clock() {
+            this.time = new Date(); // TODO: использовать this.timeZone !
+            this.seconds = this.time.getSeconds();
+            this.minutes = this.time.getMinutes();
+            this.hours = parseInt(this.time.getUTCHours()) +parseInt(this.timeZone) ;
+            this.rotateSec = this.seconds * 6 ;
+            this.rotateMin = this.minutes * 6 ;
+            this.rotateHour = this.hours * 30 +this.minutes / 2;
+
+            function addZero(t) {
+                if (t < 10){
+                    t = '0' + t;
+                }
+                return t;
+            }
+            this.minutes = addZero(this.minutes);
+            this.seconds = addZero(this.seconds);
+            this.electronicWatchText = this.hours + ':' + this.minutes + ':' + this.seconds;
+
+            setTimeout(this.clock.bind(this), 1000);
+
+            //if (typeof (this.updated) === 'function') {
+            // TODO: использовать паттерн обозреватель (pub/sub, publish/subscribe)
+            //this.updated();
+            //}
+            this.pubSubService.pub(this.modelName + 'updated');
+        }
+    }
+
+    class PubSubService {
+        constructor() {
+            this.listeners = {};
+        }
+
+        sub(eventName, listener) {
+            if (typeof (listener) !== 'function') throw "Only functions can be listerners";
+
+            if (eventName in this.listeners) {
+                if (this.listeners[eventName].indexOf(listener) == -1) {
+                    this.listeners[eventName].push(listener);
+                }
+            }
+            else {
+                this.listeners[eventName] = [listener];
+            }
+
+            /*let a = this.listeners[eventName];
+            if (!a) {
+                a = this.listeners[eventName] = [];
+            }
+            a.push(listener);*/
+        }
+
+        pub(eventName) {
+            let arrayOfListeners = this.listeners[eventName];
+            if (arrayOfListeners) {
+                for (let listener of arrayOfListeners) {
+                    listener();
+                }
+            }
+        }
+
+        delete(eventName, listener) {
+            let arrayOfListeners = this.listeners[eventName];
+            if (arrayOfListeners) {
+                const index = arrayOfListeners.indexOf(listener);
+                if (index > -1) {
+                    arrayOfListeners.splice(index, 1);
+                }
+            }
+        }
+    }
+
+    class ClockController {
+        constructor(model, view, pubSubService) {
+            this.model = model;
+            this.view = view;
+            this.view.render();
+            //this.model.updated = () => this.view.update(this.model);
+            const listener = () => this.view.update(this.model);
+
+            pubSubService.sub(this.model.modelName + 'updated', listener);
+
+            var btn = view.element.querySelector('.stop');
+            if (btn) {
+                btn.onclick = e => pubSubService.delete(this.model.modelName + 'updated', listener);
+            }
+            btn = view.element.querySelector('.start');
+            if (btn) {
+                btn.onclick = e => pubSubService.sub(this.model.modelName + 'updated', listener);
+                pubSubService.sub(this.model.modelName + 'updated', () => console.log("Второй обработчик вызван"));
+            }
+
+            this.model.clock();
+        }
+    }
+
+    new ApplicationController(new ApplicationView(document.body));
+
+</script>
+</body>
+</html>

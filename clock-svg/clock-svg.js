@@ -14,7 +14,7 @@ for (let i = 0; i < 12; i++) {
     let circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
     circle.setAttribute("id","circle");
     circle.setAttribute("r", "30");
-    circle.setAttribute("fill", "yellow");
+    circle.setAttribute("fill", "#1b6d85");
     circle.setAttribute("cx",  centerX + ((parseInt(r.width) / 2) - 40) * Math.cos(rad(30) * i - rad(60)));
     circle.setAttribute("cy", centerY + ((parseInt(r.width) / 2) - 40) * Math.sin(rad(30) * i - rad(60)) );
     svg.appendChild(circle);

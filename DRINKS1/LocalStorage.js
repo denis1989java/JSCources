@@ -29,6 +29,7 @@ function addDrink() {
     do {
         drinkName = prompt("Введите название напитка");
     } while (drinkName.length === 0);
+    drinkName="dr_"+drinkName;
     let alco = confirm("Напиток алкогольный?");
     let color;
     do {
@@ -61,8 +62,9 @@ function getDrink() {
     do {
         drinkName = prompt("Введите название напитка");
     } while (drinkName.length === 0);
+    drinkName="dr_"+drinkName;
     if (drinkStorage.getValue(drinkName)) {
-        alert(drinkName + ': ' + '\n' + 'алкогольный: ' + drinkStorage.getValue(drinkName)['алкогольный'] + '\n' + 'цвет: ' + drinkStorage.getValue(drinkName)['цвет'] + '\n' + 'рецепт приготовления: ' + drinkStorage.getValue(drinkName)['рецепт приготовления']);
+        alert(drinkName.replace("dr_","") + ': ' + '\n' + 'алкогольный: ' + drinkStorage.getValue(drinkName)['алкогольный'] + '\n' + 'цвет: ' + drinkStorage.getValue(drinkName)['цвет'] + '\n' + 'рецепт приготовления: ' + drinkStorage.getValue(drinkName)['рецепт приготовления']);
     } else {
         alert('напиток не существует');
     }
@@ -75,17 +77,16 @@ function deleteDrink() {
     do {
         drinkName = prompt("Введите название напитка");
     } while (drinkName.length === 0);
+    drinkName="dr_"+drinkName;
     if (drinkStorage.getValue(drinkName)) {
         drinkStorage.deleteValue(drinkName);
         alert('напиток удален успешно');
     } else {
         alert('напиток не существует');
     }
-    console.log(localStorage.length);
 }
 
 function showDrinks() {
-    console.log(localStorage.length);
     let keys = drinkStorage.getKeys();
     if (keys.length === 0) {
         alert('напитков и блюд нет');
@@ -106,6 +107,7 @@ function addFood() {
     do {
         foodName = prompt("Введите название блюда");
     } while (foodName.length === 0);
+    foodName="fo_"+foodName;
     let meat = confirm("Блюдо мясное?");
     let color;
     do {
@@ -136,8 +138,9 @@ function getFood() {
     do {
         foodName = prompt("Введите название блюда");
     } while (foodName.length === 0);
+    foodName="fo_"+foodName;
     if (foodStorage.getValue(foodName)) {
-        alert(foodName + ': ' + '\n' + 'мясное: ' + foodStorage.getValue(foodName)['мясное'] + '\n' + 'цвет: ' + foodStorage.getValue(foodName)['цвет'] + '\n' + 'рецепт приготовления: ' + foodStorage.getValue(foodName)['рецепт приготовления']);
+        alert(foodName.replace("fo_","") + ': ' + '\n' + 'мясное: ' + foodStorage.getValue(foodName)['мясное'] + '\n' + 'цвет: ' + foodStorage.getValue(foodName)['цвет'] + '\n' + 'рецепт приготовления: ' + foodStorage.getValue(foodName)['рецепт приготовления']);
     } else {
         alert('блюдо не существует');
     }
@@ -148,6 +151,7 @@ function deleteFood() {
     do {
         foodName = prompt("Введите название напитка");
     } while (foodName.length === 0);
+    foodName="fo_"+foodName;
     if (foodStorage.getValue(foodName)) {
         foodStorage.deleteValue(foodName);
         alert('блюдо удалено успешно');
