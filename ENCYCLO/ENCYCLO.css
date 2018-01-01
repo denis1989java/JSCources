@@ -1,0 +1,7 @@
+.pages{
+    display: block;
+}
+
+.pages>a:hover{
+    cursor: pointer;
+}
